@@ -3,8 +3,113 @@
 <head>
 	<meta charset="UTF-8">
 	<title>RiseOptions - Live Theme Customizer for WordPress</title>
+	<link rel="stylesheet" href="css/obsidian.css">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
+	<script>
+		window.onload = function() {
+		    var aCodes = document.getElementsByTagName('pre');
+		    for (var i=0; i < aCodes.length; i++) {
+		        hljs.highlightBlock(aCodes[i]);
+		    }
+		};
+	</script>
+	<style>
+		#rise-options-help-1_0_0 {font-family:Arial, Helvetica, sans-serif;margin:25px;background:#e3e3e3;border:1px solid #d6d6d6;padding:15px;color:#000;}
+		.rise-options-help-title {font-size:32px;margin-bottom:20px;margin-top:0;}
+		.rise-options-help-title-second {font-size:23px;margin:20px 0;}
+		.rise-options-help-title-second:before {content:'# ';}
+		.rise-options-help-menu {list-style:none;font-size:15px;line-height:1.5em;}
+		.rise-options-help-menu li:before {content:'# ';}
+		.rise-options-help-menu a {color:#f4645f;text-decoration:none}
+		.rise-options-help-line {display: block; height: 1px; border: 0; border-top: 1px solid #fff; margin: 1em 0; padding: 0;}
+		.rise-options-help-text {font-size: 15px; line-height: 1.4em; margin: 0 0 .8em;}
+		.rise-options-help-section {border-top:1px solid #fff;margin:20px 0;padding:20px 0;}
+	</style>
 </head>
 <body>
-	<h1>Documentation</h1>
+	<div id="rise-options-help-1_0_0">
+		<h1 class="rise-options-help-title">
+			RiseOptions Documentation
+			<small>Live Theme Customizer for WordPress</small>
+		</h1>
+		<ul class="rise-options-help-menu">
+			<li><a href="#rise-options-help-installation">Installation</a></li>
+			<li><a href="#rise-options-help-create-section">Create A Section</a></li>
+			<li><a href="#rise-options-help-create-field">Create A Field</a></li>
+			<li><a href="#rise-options-help-displaying-field">Displaying Field</a></li>
+			<li><a href="#rise-options-help-example">Example</a></li>
+		</ul>
+
+		<section class="rise-options-help-section" id="rise-options-help-installation">
+			<h2 class="rise-options-help-title-second">Installation</h2>
+			<ol class="rise-options-help-text">
+				<li>Clone the repository into your theme folder</li>
+				<li>Include the <strong>RiseOptions.php</strong> file in your theme's <strong>functions.php</strong> file with this line of code:</li>
+			</ol>
+			<pre class="php">
+
+include get_template_directory() . '/rise-options/RiseOptions.php';
+			</pre>
+		</section>
+
+		<section class="rise-options-help-section" id="rise-options-help-create-section">
+			<h2 class="rise-options-help-title-second">Create A Section</h2>
+			<p class="rise-options-help-text">For creating a new section you need to use the following code:</p>
+			<pre class="php">
+
+RiseOptions::section($name, $description);
+			</pre>
+		</section>
+
+		<section class="rise-options-help-section" id="rise-options-help-create-field">
+			<h2 class="rise-options-help-title-second">Create A Field</h2>
+			<div class="rise-options-help-text">
+				<p>For creating a new field you need to use the following code:</p>
+				<pre class="php">
+
+RiseOptions::text($id, $title, $description);
+				</pre>
+				<p>This code will create a new text field type.</p>
+				<p>For displaying all supported field types you can use this function:</p>
+				<pre class="php">
+
+RiseOptions::getSupportedTypes();
+				</pre>
+				<p>List of all supported field types: <strong>text, checkbox, radio, select, pages, image, color, upload, textarea, number, date</strong></p>
+			</div>
+		</section>
+
+		<section class="rise-options-help-section" id="rise-options-help-displaying-field">
+			<h2 class="rise-options-help-title-second">Displaying Field</h2>
+			<div class="rise-options-help-text">
+				<p>For accessing the saved field data everywhere in your theme you can use this code:</p>
+				<pre class="php">
+
+RiseOptions::get($id, $default);
+				</pre>
+			</div>
+		</section>
+
+		<section class="rise-options-help-section" id="rise-options-help-example">
+			<h2 class="rise-options-help-title-second">Example</h2>
+			<div class="rise-options-help-text">
+				<p>Below you will see a simple example of usage:</p>
+				<pre class="php">
+
+RiseOptions::section('Main Options'); // create a new section
+RiseOptions::image('image_logo', 'Upload Your Logo'); // create a image type field
+RiseOptions::checkbox('test_checkbox', 'The Checkbox Field', true); // create a checkbox field
+RiseOptions::radio('sidebar_position', 'The Sidebar Position', 'right', array(
+	'right' => 'Sidebar right',
+	'left' => 'Sidebar left'
+)); // create a radio type field
+
+RiseOptions::section('Another Section', 'this is another section'); // create another section
+RiseOptions::textarea('analytics', 'Place Your Analytics Data'); // create a textarea field
+RiseOptions::color('test_color', 'Main Color', '#000000'); // create a color field
+				</pre>
+			</div>
+		</section>
+	</div>
 </body>
 </html>
