@@ -20,11 +20,13 @@ class RiseOptions {
 	private static $baseTypes      = array('text', 'checkbox', 'radio', 'select', 'pages');
 	private static $advanceTypes   = array('image', 'color', 'upload');
 	private static $customTypes    = array('textarea', 'number', 'date');
+	private static $toRemove       = array();
 
 	public static function init ( $wp_customize ) {
 		self::$wp_customize = $wp_customize;
 		self::registerSections();
 		self::registerFields();
+		self::removeOptions();
 	}
 
 	public static function __callStatic($name, $args) {
@@ -94,6 +96,12 @@ class RiseOptions {
 		self::$fields[] = $field;
 	}
 
+	private static function removeOptions() {
+		foreach (self::$toRemove as $id) {
+			self::$wp_customize->remove_section($id);
+		}
+	}
+
 	// helpers
 	private static function toID($name) {
 		return strtolower( str_replace(" ", "_", $name) );
@@ -108,6 +116,10 @@ class RiseOptions {
 
 		self::$sections[] = $section;
 		self::$priority++;
+	}
+
+	public static function removeSection($id) {
+		self::$toRemove[] = $id;
 	}
 
 	public static function get($id, $default = null) {
